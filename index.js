@@ -1,8 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-// const moneyRegex = new RegExp('\${1}\d*\.\d{2}\', 'i');
 const moneyRegex = new RegExp('\\${1}\\d*\.{1}\\d{2}', 'i')
-const searchList = ['guitar', 'midi', 'bass', 'controller', 'drumset', 'drums', 'Pedalboard']
+const searchList = ['guitar', 'midi', 'bass', 'controller', 'drumset', 'drums', 'percussion']
 async function fetchUrl(url) {
     const { data } = await axios.get(url);
     return cheerio.load(data);
@@ -23,7 +22,7 @@ async function getMusiciansFriendData() {
     priceData = getPriceData($)
     return {
         'title': $('#feature-right > .feature-title').text().trim(),
-        'description' : $('#feature-right > .feature-description').text().trim(),
+        'description' : $('#feature-right > .feature-description').text().trim().toLowerCase(),
         'price': priceData
     }
 }
