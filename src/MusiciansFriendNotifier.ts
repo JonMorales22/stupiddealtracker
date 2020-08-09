@@ -1,5 +1,8 @@
 import { MusiciansFriendAnalyzer } from './MusiciansFriendAnalyzer';
-const searchList = ['guitar', 'midi', 'bass', 'controller', 'drumset', 'drums', 'percussion']
+import { SES, AWSError } from 'aws-sdk';
+import { SendEmailRequest, SendEmailResponse } from 'aws-sdk/clients/ses';
+
+const searchList = ['guitar', 'midi', 'bass', 'controller', 'drum set', 'drums', 'percussion', 'drum']
 
 export class MusiciansFriendNotifier {
     analyzer: MusiciansFriendAnalyzer
@@ -11,13 +14,16 @@ export class MusiciansFriendNotifier {
         return new Promise(async(resolve, reject) => {
             try{
                 const data = await this.analyzer.getMusiciansFriendData()
-                if(this.searchData(data.description)==true) {
-                    this.notify()
+                console.log(JSON.stringify(data,null, 2));
+                if(this.searchData(data.description)||this.searchData(data.title)) {
+                    //await this.notify()
+                    return resolve("THE BEACON IS LIT!!! GONDOR CALLS FOR AID!");
                 }
-                resolve(true);
+
+                return resolve("No notification Sadge :(");
             }
             catch(e) {
-                reject(e);
+                return reject(e);
             }
         })
 
@@ -32,7 +38,50 @@ export class MusiciansFriendNotifier {
         return false;
     }
 
-    notify() {
-        console.log('notify!');
+    async notify() {
+        // const ses = new SES();
+
+        // const params: SendEmailRequest = {
+        //     Source: "jonmorales2.718@gmail.com",
+        //     Destination: {
+        //         ToAddresses: [
+        //             "jonmorales22@gmail.com"
+        //         ]
+        //     },
+        //     Message: {
+        //         Subject: {
+        //             Data: "Musicians Friend Tracker",
+        //             Charset: "UTF-8"
+        //         },
+        //         Body: {
+        //             Text: {
+        //                 Data: "We found something you're looking for!",
+        //                 Charset: "UTF-8"
+        //             }
+        //             // Html: {
+        //             //     Data: "HTML_FORMAT_BODY",
+        //             //     Charset: "UTF-8"
+        //             // }
+        //         }
+        //     }
+        // }
+        // return new Promise((resolve, reject) => {
+        //     ses.sendEmail(params, (err: AWSError, data: SendEmailResponse) => {
+        //         if (err) {
+        //             console.log(err, err.stack);
+        //             return reject(err)
+        //         }
+        //         else 
+        //             return resolve(data);
+        //       });
+        // })
+        // ses.sendEmail(params, (err: AWSError, data: SendEmailResponse) => {
+        //     if (err) {
+        //         console.log(err, err.stack);
+        //         throw(err);   
+        //     }
+        //     else 
+        //         console.log(data);
+        //   });
     }
 }
