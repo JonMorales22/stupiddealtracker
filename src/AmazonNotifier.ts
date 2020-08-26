@@ -10,9 +10,10 @@ export class AmazonNotifier {
           this.ses = new SES();
       }
 
-      async sendEmail() {
+      async notify( data: StupidDealData) {
           try {
             return new Promise((resolve, reject) => {
+              const params = this.createEmailRequest(data);
               this.ses.sendEmail(params, (err: AWSError, data: SendEmailResponse) => {
                   if (err) {
                       console.log(err, err.stack);
@@ -27,26 +28,27 @@ export class AmazonNotifier {
             throw e;
           }
       }
-  }
 
-// Create sendEmail params 
-const params: SendEmailRequest = {
-  Source: "jonmorales2.718@gmail.com",
-  Destination: {
-      ToAddresses: [
-          "jonmorales22@gmail.com"
-      ]
-  },
-  Message: {
-      Subject: {
-          Data: "Musicians Friend Tracker",
-          Charset: "UTF-8"
-      },
-      Body: {
-          Text: {
-              Data: "We found something you're looking for!",
-              Charset: "UTF-8"
+      createEmailRequest(data: StupidDealData) : SendEmailRequest {
+        return {
+          Source: "jonmorales2.718@gmail.com",
+          Destination: {
+              ToAddresses: [
+                  "jonmorales22@gmail.com"
+              ]
+          },
+          Message: {
+              Subject: {
+                  Data: `Musicians Friend Tracker - ${data.title}`,
+                  Charset: "UTF-8"
+              },
+              Body: {
+                  Text: {
+                      Data: JSON.stringify(data, null, 2),
+                      Charset: "UTF-8"
+                  }
+              }
           }
+        }
       }
   }
-}

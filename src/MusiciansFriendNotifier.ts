@@ -17,7 +17,7 @@ export class MusiciansFriendNotifier {
                 const data = await this.analyzer.getMusiciansFriendData()
                 console.log(JSON.stringify(data,null, 2));
                 if(this.searchData(data.description)||this.searchData(data.title)) {
-                    await this.notify()
+                    await this.notifier.notify(data)
                     return resolve("THE BEACON IS LIT!!! GONDOR CALLS FOR AID!");
                 }
 
@@ -30,16 +30,13 @@ export class MusiciansFriendNotifier {
 
     }
 
-    searchData(data: string | string[]) {
+    searchData(data: string) {
+        data.toLowerCase();
         for(let i=0;i<searchList.length;i++) {
             if(data.includes(searchList[i]))
                 return true;
         }
     
         return false;
-    }
-
-    async notify() {
-        await this.notifier.sendEmail();
     }
 }

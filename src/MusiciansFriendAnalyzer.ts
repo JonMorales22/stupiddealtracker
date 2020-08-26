@@ -21,15 +21,15 @@ export class MusiciansFriendAnalyzer {
         });
     }
 
-    async getMusiciansFriendData(): Promise<any> {
+    async getMusiciansFriendData(): Promise<StupidDealData> {
         return new Promise(async(resolve, reject) => {
             try{
                 const $ = await this.fetchUrl(); 
                 const priceData = this.getPriceData($)
                 return resolve ({
-                    'title': $('#feature-right > .feature-title').text().trim(),
-                    'description' : $('#feature-right > .feature-description').text().trim().toLowerCase(),
-                    'price': priceData
+                    title: $('#feature-right > .feature-title').text().trim(),
+                    description : $('#feature-right > .feature-description').text().trim(),
+                    price: priceData
                 })
             }
             catch(e){
@@ -38,22 +38,23 @@ export class MusiciansFriendAnalyzer {
         })
     }
 
-    getPriceData($) {
+    //gets ".feature-save" node from cheerio and then uses regex to pull out the price information
+    getPriceData($) : PriceData {
         const savings = $('.feature-save').text().trim();
         const newPrice = $('.feature-price').text().trim();
         return {
             originalPrice: $('.regular-price').text().trim(),
-            newPrice: moneyRegex.exec(newPrice)==null ? null : moneyRegex.exec(newPrice)[0],
-            savings: moneyRegex.exec(savings) == null ? null : moneyRegex.exec(savings)[0]
+            newPrice: moneyRegex.exec(newPrice)==null ? null : parseFloat(moneyRegex.exec(newPrice)[0]),
+            savings: moneyRegex.exec(savings) == null ? null : parseFloat(moneyRegex.exec(savings)[0])
         }
     }
 
-    searchData(data) {
-        for(let i=0;i<this.searchList.length;i++) {
-            if(data.includes(this.searchList[i]))
-                return true;
-        }
+    // searchData(data) {
+    //     for(let i=0;i<this.searchList.length;i++) {
+    //         if(data.includes(this.searchList[i]))
+    //             return true;
+    //     }
     
-        return false;
-    }
+    //     return false;
+    // }
 }

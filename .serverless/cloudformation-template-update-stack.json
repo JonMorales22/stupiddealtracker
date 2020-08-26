@@ -146,7 +146,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/musiciansfriendtracker/dev/1598413568122-2020-08-26T03:46:08.122Z/musiciansfriendtracker.zip"
+          "S3Key": "serverless/musiciansfriendtracker/dev/1598416970754-2020-08-26T04:42:50.754Z/musiciansfriendtracker.zip"
         },
         "FunctionName": "musiciansfriendtracker-dev-hello",
         "Handler": "handler.track",
@@ -164,14 +164,14 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersionVbTH9JJ7ttdl2ZIouFcoMBTbr2Jem8dB6tZQpA1XI": {
+    "HelloLambdaVersionTBPskFvIX9CKX0S366s6S8OzEXURJuqJy5UaKqg8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "eTllt/vkVuWkirBnCLWyIzq6IUSn+AWed8kLkf75qSo="
+        "CodeSha256": "teEWtHrN1dXboGNxVZ2LkTRsdZSder7wzNL7PT6CDnc="
       }
     },
     "ApiGatewayRestApi": {
@@ -289,7 +289,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1598413543117": {
+    "ApiGatewayDeployment1598416967343": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -349,7 +349,7 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionVbTH9JJ7ttdl2ZIouFcoMBTbr2Jem8dB6tZQpA1XI"
+        "Ref": "HelloLambdaVersionTBPskFvIX9CKX0S366s6S8OzEXURJuqJy5UaKqg8"
       }
     },
     "ServiceEndpoint": {
