@@ -48,13 +48,4 @@ export class MusiciansFriendAnalyzer {
             savings: moneyRegex.exec(savings) == null ? null : parseFloat(moneyRegex.exec(savings)[0])
         }
     }
-
-    // searchData(data) {
-    //     for(let i=0;i<this.searchList.length;i++) {
-    //         if(data.includes(this.searchList[i]))
-    //             return true;
-    //     }
-    
-    //     return false;
-    // }
 }
