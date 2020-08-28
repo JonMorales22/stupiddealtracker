@@ -159,7 +159,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/musiciansfriendtracker/dev/1598416970754-2020-08-26T04:42:50.754Z/musiciansfriendtracker.zip"
+                "S3Key": "serverless/musiciansfriendtracker/dev/1598496406684-2020-08-27T02:46:46.684Z/musiciansfriendtracker.zip"
               },
               "FunctionName": "musiciansfriendtracker-dev-hello",
               "Handler": "handler.track",
@@ -177,14 +177,14 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersionTBPskFvIX9CKX0S366s6S8OzEXURJuqJy5UaKqg8": {
+          "HelloLambdaVersionOzOidiBvcLYcZYfmBbKgMMx0ohoTfjnaMY8HIUrSB4I": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "teEWtHrN1dXboGNxVZ2LkTRsdZSder7wzNL7PT6CDnc="
+              "CodeSha256": "/sv8WxqQog9XbHYXKfHWldPDJjt+I6DzQtyCGEjui88="
             }
           },
           "ApiGatewayRestApi": {
@@ -302,7 +302,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1598416967343": {
+          "ApiGatewayDeployment1598496403326": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -362,7 +362,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionTBPskFvIX9CKX0S366s6S8OzEXURJuqJy5UaKqg8"
+              "Ref": "HelloLambdaVersionOzOidiBvcLYcZYfmBbKgMMx0ohoTfjnaMY8HIUrSB4I"
             }
           },
           "ServiceEndpoint": {
@@ -497,7 +497,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionTBPskFvIX9CKX0S366s6S8OzEXURJuqJy5UaKqg8"
+        "versionLogicalId": "HelloLambdaVersionOzOidiBvcLYcZYfmBbKgMMx0ohoTfjnaMY8HIUrSB4I"
       }
     },
     "configValidationMode": "warn",
@@ -515,7 +515,7 @@
       },
       "package": {
         "artifact": "/Users/jonathanmorales/Projects/stupiddealtracker/.serverless/musiciansfriendtracker.zip",
-        "artifactDirectoryName": "serverless/musiciansfriendtracker/dev/1598416970754-2020-08-26T04:42:50.754Z"
+        "artifactDirectoryName": "serverless/musiciansfriendtracker/dev/1598496406684-2020-08-27T02:46:46.684Z"
       },
       "layers": {
         "$ref": "$[\"service\"][\"layers\"]"
@@ -526,7 +526,7 @@
     "artifact": "/Users/jonathanmorales/Projects/stupiddealtracker/.serverless/musiciansfriendtracker.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/musiciansfriendtracker/dev/1598416970754-2020-08-26T04:42:50.754Z",
+    "artifactDirectoryName": "serverless/musiciansfriendtracker/dev/1598496406684-2020-08-27T02:46:46.684Z",
     "artifact": "musiciansfriendtracker.zip"
   }
 }
