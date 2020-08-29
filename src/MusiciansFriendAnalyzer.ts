@@ -1,7 +1,7 @@
 import { IAnalyzer } from './IAnalyzer';
+import { IHttpClient } from './IHttpClient';
 import { PriceDataExtractor } from './PriceDataExtractor';
 
-const axios = require('axios');
 const cheerio = require('cheerio');
 const url = 'https://www.musiciansfriend.com/stupid'
 
@@ -13,26 +13,16 @@ const priceDataElements = {
 
 export class MusiciansFriendAnalyzer implements IAnalyzer{
     priceDataExtractor: PriceDataExtractor
-    constructor() {
+    httpClient: IHttpClient
+    constructor(httpClient: IHttpClient) {
         this.priceDataExtractor = new PriceDataExtractor();
-    }
-
-    async fetchUrl() : Promise<any> {
-        return new Promise(async(resolve, reject) => {
-            try{
-                const { data } = await axios.get(url);
-                return resolve(cheerio.load(data));
-            }
-            catch(e) {
-                return reject(e);
-            }
-        });
+        this.httpClient =  httpClient;
     }
 
     async getData(): Promise<SavingsData> {
         return new Promise(async(resolve, reject) => {
             try{
-                const $ = await this.fetchUrl(); 
+                const $ = cheerio.load(await this.httpClient.fetchUrl(url)); 
                 const priceData = this.priceDataExtractor.getPriceData($, priceDataElements)
                 return resolve ({
                     title: PriceDataExtractor.getTextFromElement($, '#feature-right > .feature-title'), 
