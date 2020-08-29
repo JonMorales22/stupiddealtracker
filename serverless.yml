@@ -22,6 +22,8 @@ functions:
     handler: handler.track
     events: 
       - schedule:
-          rate: rate(10 minutes)
+          name: musicians-friend-event
+          description: 'parses Musicians Friend everyday at 12:01 AM GMT (8:01 EST)'
+          rate: cron(1 12 * * ? *)
           input:
-            target: musiciansFriend
+            target: MusiciansFriend

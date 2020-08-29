@@ -2,7 +2,7 @@ import { MusiciansFriendNotifier } from './MusiciansFriendNotifier'
 
 function index() : void {
     const notifier = new MusiciansFriendNotifier();
-    notifier.doWork("musiciansFriend").then((result)=>{
+    notifier.doWork("MusiciansFriend").then((result)=>{
         if(result)
             console.log(result);
     })

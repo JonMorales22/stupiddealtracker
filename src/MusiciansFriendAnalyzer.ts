@@ -5,10 +5,8 @@ const cheerio = require('cheerio');
 const url = 'https://www.musiciansfriend.com/stupid'
 
 export class MusiciansFriendAnalyzer {
-    searchList: string[]
     priceDataExtractor: PriceDataExtractor
-    constructor(words: string[]) {
-        this.searchList=words;
+    constructor() {
         this.priceDataExtractor = new PriceDataExtractor();
     }
 
@@ -24,7 +22,7 @@ export class MusiciansFriendAnalyzer {
         });
     }
 
-    async getMusiciansFriendData(): Promise<StupidDealData> {
+    async getData(): Promise<StupidDealData> {
         return new Promise(async(resolve, reject) => {
             try{
                 const $ = await this.fetchUrl(); 
