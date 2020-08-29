@@ -1,22 +1,11 @@
 const moneyRegex = new RegExp('\\${1}\\d*\.{1}\\d{2}', 'i')
 
 export class PriceDataExtractor {
-    getPriceData($) : PriceData {
-        const savings = PriceDataExtractor.getTextFromElement($, '.feature-save');
-        const newPrice = PriceDataExtractor.getTextFromElement($, '.feature-price');
+    getPriceData($, priceDataElements: PriceDataElements) : PriceData {
+        const savings = PriceDataExtractor.getTextFromElement($, priceDataElements.savings);
+        const newPrice = PriceDataExtractor.getTextFromElement($, priceDataElements.newPrice);
         return {
-            originalPrice: this.parseMoneyToNumber(PriceDataExtractor.getTextFromElement($, '.regular-price')),
-            newPrice: this.getDollarString(newPrice),
-            savings: this.getDollarString(savings)
-        }
-    }
-
-    getPriceDataForGuitarCenter($) : PriceData {
-        const originalPrice = PriceDataExtractor.getTextFromElement($, '.price-display-value');
-        const newPrice = PriceDataExtractor.getTextFromElement($, '.dailypick-price');
-        const savings = PriceDataExtractor.getTextFromElement($, '.dailypick-save');
-        return {
-            originalPrice: this.parseMoneyToNumber(originalPrice),
+            originalPrice: this.parseMoneyToNumber(PriceDataExtractor.getTextFromElement($, priceDataElements.originalPrice)),
             newPrice: this.getDollarString(newPrice),
             savings: this.getDollarString(savings)
         }
@@ -35,4 +24,10 @@ export class PriceDataExtractor {
     static getTextFromElement($, htmlElement) : string {
         return $(htmlElement).text().trim();
     }
+}
+
+interface PriceDataElements {
+    originalPrice: string,
+    newPrice: string,
+    savings: string
 }
