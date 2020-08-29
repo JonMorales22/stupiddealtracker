@@ -28,8 +28,8 @@ export class MusiciansFriendAnalyzer {
                 const $ = await this.fetchUrl(); 
                 const priceData = this.priceDataExtractor.getPriceData($)
                 return resolve ({
-                    title: PriceDataExtractor.getTextFromElement($, '#feature-right > .feature-title'), //$('#feature-right > .feature-title').text().trim(),
-                    description : PriceDataExtractor.getTextFromElement($, '#feature-right > .feature-description'), //$('#feature-right > .feature-description').text().trim(),
+                    title: PriceDataExtractor.getTextFromElement($, '#feature-right > .feature-title'), 
+                    description : PriceDataExtractor.getTextFromElement($, '#feature-right > .feature-description'),
                     price: priceData
                 })
             }

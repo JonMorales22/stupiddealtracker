@@ -1,8 +1,8 @@
-import { MusiciansFriendNotifier } from './MusiciansFriendNotifier'
+import { SavingsNotifier } from './SavingsNotifier'
 
 function index() : void {
-    const notifier = new MusiciansFriendNotifier();
-    notifier.doWork("MusiciansFriend").then((result)=>{
+    const notifier = new SavingsNotifier();
+    notifier.doWork(process.argv[2]).then((result)=>{
         if(result)
             console.log(result);
     })

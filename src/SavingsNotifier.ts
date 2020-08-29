@@ -5,7 +5,7 @@ import { GuitarCenterAnalyzer } from './GuitarCenterAnalyzer';
 
 const searchList = ['guitar', 'midi', 'bass', 'controller', 'drum set', 'drums', 'percussion', 'drum']
 
-export class MusiciansFriendNotifier {
+export class SavingsNotifier {
     notifier: AmazonNotifier
     constructor() {
         this.notifier = new AmazonNotifier();
@@ -18,7 +18,7 @@ export class MusiciansFriendNotifier {
                 const data = await analyzer.getData()
                 console.log(JSON.stringify(data,null, 2));
                 if(this.searchData(data.description)||this.searchData(data.title)) {
-                    await this.notifier.notify(data)
+                    // await this.notifier.notify(data)
                     return resolve("THE BEACON IS LIT!!! GONDOR CALLS FOR AID!");
                 }
 

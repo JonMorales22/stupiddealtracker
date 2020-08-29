@@ -27,3 +27,9 @@ functions:
           rate: cron(1 12 * * ? *)
           input:
             target: MusiciansFriend
+      - schedule:
+          name: guitar-center-event
+          description: 'parses guitar center everyday at 7:01 AM GMT (3:01 EST)'
+          rate: cron(1 7 * * ? *)
+          input:
+            target: GuitarCenter
