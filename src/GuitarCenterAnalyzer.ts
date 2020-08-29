@@ -24,7 +24,7 @@ export class GuitarCenterAnalyzer implements IAnalyzer {
         });
     }
 
-    async getData(): Promise<StupidDealData> {
+    async getData(): Promise<SavingsData> {
         return new Promise(async(resolve, reject) => {
             try{
                 const $ = await this.fetchUrl(); 

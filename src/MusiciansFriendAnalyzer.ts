@@ -1,15 +1,17 @@
+import { IAnalyzer } from './IAnalyzer';
 import { PriceDataExtractor } from './PriceDataExtractor';
 
 const axios = require('axios');
 const cheerio = require('cheerio');
 const url = 'https://www.musiciansfriend.com/stupid'
+
 const priceDataElements = {
     savings: '.feature-save',
     newPrice: '.feature-price',
     originalPrice: '.regular-price'
 }
 
-export class MusiciansFriendAnalyzer {
+export class MusiciansFriendAnalyzer implements IAnalyzer{
     priceDataExtractor: PriceDataExtractor
     constructor() {
         this.priceDataExtractor = new PriceDataExtractor();
@@ -27,7 +29,7 @@ export class MusiciansFriendAnalyzer {
         });
     }
 
-    async getData(): Promise<StupidDealData> {
+    async getData(): Promise<SavingsData> {
         return new Promise(async(resolve, reject) => {
             try{
                 const $ = await this.fetchUrl(); 

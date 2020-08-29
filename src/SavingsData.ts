@@ -1,4 +1,4 @@
-interface StupidDealData {
+interface SavingsData {
     title: string,
     description: string,
     price: PriceData
