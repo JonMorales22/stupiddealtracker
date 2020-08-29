@@ -159,7 +159,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/musiciansfriendtracker/dev/1598496406684-2020-08-27T02:46:46.684Z/musiciansfriendtracker.zip"
+                "S3Key": "serverless/musiciansfriendtracker/dev/1598662930447-2020-08-29T01:02:10.447Z/musiciansfriendtracker.zip"
               },
               "FunctionName": "musiciansfriendtracker-dev-hello",
               "Handler": "handler.track",
@@ -177,145 +177,36 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersionOzOidiBvcLYcZYfmBbKgMMx0ohoTfjnaMY8HIUrSB4I": {
+          "HelloLambdaVersionP6o1TlQOjlbHDGChJeTvk2sShxmAKUA8pQYv7ZW07FY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "/sv8WxqQog9XbHYXKfHWldPDJjt+I6DzQtyCGEjui88="
+              "CodeSha256": "fpWYNCqdA0kHGODWhzm5wgeUSuqvzVlYIUY7MmMjo4A="
             }
           },
-          "ApiGatewayRestApi": {
-            "Type": "AWS::ApiGateway::RestApi",
+          "HelloEventsRuleSchedule1": {
+            "Type": "AWS::Events::Rule",
             "Properties": {
-              "Name": "dev-musiciansfriendtracker",
-              "EndpointConfiguration": {
-                "Types": [
-                  "EDGE"
-                ]
-              },
-              "Policy": ""
-            }
-          },
-          "ApiGatewayResourceTrack": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "PathPart": "track",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayMethodTrackOptions": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
+              "ScheduleExpression": "rate(10 minutes)",
+              "State": "ENABLED",
+              "Targets": [
                 {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceTrack"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayMethodTrackGet": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "GET",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceTrack"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "HelloLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
+                  "Input": "{\"target\":\"musiciansFriend\"}",
+                  "Arn": {
+                    "Fn::GetAtt": [
+                      "HelloLambdaFunction",
+                      "Arn"
                     ]
-                  ]
+                  },
+                  "Id": "helloSchedule"
                 }
-              },
-              "MethodResponses": []
+              ]
             }
           },
-          "ApiGatewayDeployment1598496403326": {
-            "Type": "AWS::ApiGateway::Deployment",
-            "Properties": {
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "StageName": "dev"
-            },
-            "DependsOn": [
-              "ApiGatewayMethodTrackOptions",
-              "ApiGatewayMethodTrackGet"
-            ]
-          },
-          "HelloLambdaPermissionApiGateway": {
+          "HelloLambdaPermissionEventsRuleSchedule1": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
@@ -325,29 +216,11 @@
                 ]
               },
               "Action": "lambda:InvokeFunction",
-              "Principal": "apigateway.amazonaws.com",
+              "Principal": "events.amazonaws.com",
               "SourceArn": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":execute-api:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    ":",
-                    {
-                      "Ref": "ApiGatewayRestApi"
-                    },
-                    "/*/*"
-                  ]
+                "Fn::GetAtt": [
+                  "HelloEventsRuleSchedule1",
+                  "Arn"
                 ]
               }
             }
@@ -362,30 +235,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionOzOidiBvcLYcZYfmBbKgMMx0ohoTfjnaMY8HIUrSB4I"
-            }
-          },
-          "ServiceEndpoint": {
-            "Description": "URL of the service endpoint",
-            "Value": {
-              "Fn::Join": [
-                "",
-                [
-                  "https://",
-                  {
-                    "Ref": "ApiGatewayRestApi"
-                  },
-                  ".execute-api.",
-                  {
-                    "Ref": "AWS::Region"
-                  },
-                  ".",
-                  {
-                    "Ref": "AWS::URLSuffix"
-                  },
-                  "/dev"
-                ]
-              ]
+              "Ref": "HelloLambdaVersionP6o1TlQOjlbHDGChJeTvk2sShxmAKUA8pQYv7ZW07FY"
             }
           }
         }
@@ -465,29 +315,11 @@
         "handler": "handler.track",
         "events": [
           {
-            "http": {
-              "path": "track",
-              "method": "get",
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "GET"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "integration": "AWS_PROXY"
+            "schedule": {
+              "rate": "rate(10 minutes)",
+              "input": {
+                "target": "musiciansFriend"
+              }
             }
           }
         ],
@@ -497,7 +329,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionOzOidiBvcLYcZYfmBbKgMMx0ohoTfjnaMY8HIUrSB4I"
+        "versionLogicalId": "HelloLambdaVersionP6o1TlQOjlbHDGChJeTvk2sShxmAKUA8pQYv7ZW07FY"
       }
     },
     "configValidationMode": "warn",
@@ -515,7 +347,7 @@
       },
       "package": {
         "artifact": "/Users/jonathanmorales/Projects/stupiddealtracker/.serverless/musiciansfriendtracker.zip",
-        "artifactDirectoryName": "serverless/musiciansfriendtracker/dev/1598496406684-2020-08-27T02:46:46.684Z"
+        "artifactDirectoryName": "serverless/musiciansfriendtracker/dev/1598662930447-2020-08-29T01:02:10.447Z"
       },
       "layers": {
         "$ref": "$[\"service\"][\"layers\"]"
@@ -526,7 +358,7 @@
     "artifact": "/Users/jonathanmorales/Projects/stupiddealtracker/.serverless/musiciansfriendtracker.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/musiciansfriendtracker/dev/1598496406684-2020-08-27T02:46:46.684Z",
+    "artifactDirectoryName": "serverless/musiciansfriendtracker/dev/1598662930447-2020-08-29T01:02:10.447Z",
     "artifact": "musiciansfriendtracker.zip"
   }
 }
