@@ -13,13 +13,16 @@ export class AmazonNotifier implements INotifier {
           try {
             return new Promise((resolve, reject) => {
               const params = this.createEmailRequest(data);
+              console.log("Attempting to send email....")
               this.ses.sendEmail(params, (err: AWSError, data: SendEmailResponse) => {
                   if (err) {
-                      console.log(err, err.stack);
+                      console.error('Failed to send email :(', err, err.stack);
                       return reject(err)
                   }
-                  else 
-                      return resolve(data);
+                  else {
+                    console.log("Succeeded in sending email!")
+                    return resolve(data);
+                  }
                 });
             })
           }
@@ -38,7 +41,7 @@ export class AmazonNotifier implements INotifier {
           },
           Message: {
               Subject: {
-                  Data: `Musicians Friend Tracker - ${data.title}`,
+                  Data: `${data.source} - ${data.title}`,
                   Charset: "UTF-8"
               },
               Body: {

@@ -29,6 +29,7 @@ export class GuitarCenterAnalyzer implements IAnalyzer {
                 this.parser.load(await this.httpClient.fetchUrl(url)); 
                 const priceData = this.priceDataExtractor.getPriceData(priceDataElements);
                 return resolve ({
+                    source: 'Guitar Center',
                     title: this.parser.getTextFromElement('.displayNameColor'), 
                     description : this.parser.getTextFromElement('.dailypick-description.truncated'),
                     price: priceData

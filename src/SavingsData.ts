@@ -1,4 +1,5 @@
 interface SavingsData {
+    source: string,
     title: string,
     description: string,
     price: PriceData

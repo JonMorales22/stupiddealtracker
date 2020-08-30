@@ -28,6 +28,7 @@ export class MusiciansFriendAnalyzer implements IAnalyzer{
                 this.parser.load(await this.httpClient.fetchUrl(url)); 
                 const priceData = this.priceDataExtractor.getPriceData(priceDataElements)
                 return resolve ({
+                    source: 'Musicians Friend',
                     title: this.parser.getTextFromElement('#feature-right > .feature-title'), 
                     description : this.parser.getTextFromElement('#feature-right > .feature-description'),
                     price: priceData

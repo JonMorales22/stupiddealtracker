@@ -23,13 +23,31 @@ functions:
     events: 
       - schedule:
           name: musicians-friend-event
-          description: 'parses Musicians Friend everyday at 12:01 AM GMT (8:01 EST)'
+          description: 'parses Musicians Friend everyday at 12:01 AM GMT (8:01 AM EST)'
           rate: cron(1 12 * * ? *)
           input:
             target: MusiciansFriend
+            searchList:
+                - 'guitar'
+                - 'midi'
+                - 'bass'
+                - 'controller'
+                - 'drum set'
+                - 'drums'
+                - 'percussion'
+                - 'drum'
       - schedule:
           name: guitar-center-event
-          description: 'parses guitar center everyday at 7:01 AM GMT (3:01 EST)'
+          description: 'parses Guitar Center everyday at 7:01 AM GMT (3:01 AM EST)'
           rate: cron(1 7 * * ? *)
           input:
             target: GuitarCenter
+            searchList:
+                - 'guitar'
+                - 'midi'
+                - 'bass'
+                - 'controller'
+                - 'drum set'
+                - 'drums'
+                - 'percussion'
+                - 'drum'
