@@ -1,6 +1,7 @@
 import { IAnalyzer } from './IAnalyzer';
 import { PriceDataExtractor } from './PriceDataExtractor';
 import { IHttpClient } from './IHttpClient';
+import { IParser } from './IParser';
 
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -15,18 +16,21 @@ const priceDataElements = {
 export class GuitarCenterAnalyzer implements IAnalyzer {
     priceDataExtractor: PriceDataExtractor
     httpClient: IHttpClient
-    constructor(httpClient: IHttpClient) {
+    parser: IParser
+    constructor(httpClient: IHttpClient, parser: IParser) {
         this.httpClient = httpClient;
+        this.parser = parser;
+        this.priceDataExtractor = new PriceDataExtractor(this.parser);
     }
 
     async getData(): Promise<SavingsData> {
         return new Promise(async(resolve, reject) => {
             try{
-                const $ = cheerio.load(await this.httpClient.fetchUrl(url)); 
-                const priceData = new PriceDataExtractor().getPriceData($, priceDataElements);
+                this.parser.load(await this.httpClient.fetchUrl(url)); 
+                const priceData = this.priceDataExtractor.getPriceData(priceDataElements);
                 return resolve ({
-                    title: PriceDataExtractor.getTextFromElement($, '.displayNameColor'), 
-                    description : PriceDataExtractor.getTextFromElement($, '.dailypick-description.truncated'),
+                    title: this.parser.getTextFromElement('.displayNameColor'), 
+                    description : this.parser.getTextFromElement('.dailypick-description.truncated'),
                     price: priceData
                 })
             }

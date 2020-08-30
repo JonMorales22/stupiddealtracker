@@ -2,7 +2,8 @@ import { AmazonNotifier } from './AmazonNotifier';
 import { IAnalyzer } from './IAnalyzer';
 import { MusiciansFriendAnalyzer } from './MusiciansFriendAnalyzer';
 import { GuitarCenterAnalyzer } from './GuitarCenterAnalyzer';
-import { ServerParser } from './ServerParser'
+import { HttpClient } from './HttpClient'
+import { CheerioParser } from './CheerioParser'
 
 const searchList = ['guitar', 'midi', 'bass', 'controller', 'drum set', 'drums', 'percussion', 'drum']
 
@@ -19,7 +20,6 @@ export class SavingsNotifier {
                 const data = await analyzer.getData()
                 console.log(JSON.stringify(data,null, 2));
                 if(this.searchData(data.description)||this.searchData(data.title)) {
-                    // await this.notifier.notify(data)
                     return resolve("THE BEACON IS LIT!!! GONDOR CALLS FOR AID!");
                 }
 
@@ -34,10 +34,10 @@ export class SavingsNotifier {
     getAnalyzer(target: string) : IAnalyzer {
         switch(target){
             case Analyzers.GuitarCenter:
-                return new GuitarCenterAnalyzer(new ServerParser());
+                return new GuitarCenterAnalyzer(new HttpClient(), new CheerioParser());
             case Analyzers.MusiciansFriend:
             default:
-                return new MusiciansFriendAnalyzer(new ServerParser());
+                return new MusiciansFriendAnalyzer(new HttpClient(), new CheerioParser());
         }
     }
 

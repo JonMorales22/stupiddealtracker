@@ -1,8 +1,9 @@
 import { IAnalyzer } from './IAnalyzer';
 import { IHttpClient } from './IHttpClient';
 import { PriceDataExtractor } from './PriceDataExtractor';
+import { IParser } from './IParser';
+import { CheerioParser } from './CheerioParser';
 
-const cheerio = require('cheerio');
 const url = 'https://www.musiciansfriend.com/stupid'
 
 const priceDataElements = {
@@ -14,19 +15,21 @@ const priceDataElements = {
 export class MusiciansFriendAnalyzer implements IAnalyzer{
     priceDataExtractor: PriceDataExtractor
     httpClient: IHttpClient
-    constructor(httpClient: IHttpClient) {
-        this.priceDataExtractor = new PriceDataExtractor();
+    parser: IParser
+    constructor(httpClient: IHttpClient, parser: IParser) {
         this.httpClient =  httpClient;
+        this.parser = parser;
+        this.priceDataExtractor = new PriceDataExtractor(this.parser);
     }
 
     async getData(): Promise<SavingsData> {
         return new Promise(async(resolve, reject) => {
             try{
-                const $ = cheerio.load(await this.httpClient.fetchUrl(url)); 
-                const priceData = this.priceDataExtractor.getPriceData($, priceDataElements)
+                this.parser.load(await this.httpClient.fetchUrl(url)); 
+                const priceData = this.priceDataExtractor.getPriceData(priceDataElements)
                 return resolve ({
-                    title: PriceDataExtractor.getTextFromElement($, '#feature-right > .feature-title'), 
-                    description : PriceDataExtractor.getTextFromElement($, '#feature-right > .feature-description'),
+                    title: this.parser.getTextFromElement('#feature-right > .feature-title'), 
+                    description : this.parser.getTextFromElement('#feature-right > .feature-description'),
                     price: priceData
                 })
             }

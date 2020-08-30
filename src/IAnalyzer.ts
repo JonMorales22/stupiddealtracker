@@ -1,3 +1,3 @@
 export interface IAnalyzer {
-    getData(): Promise<StupidDealData>;
+    getData(): Promise<SavingsData>;
 }

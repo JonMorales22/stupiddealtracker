@@ -10,7 +10,7 @@ export class AmazonNotifier {
           this.ses = new SES();
       }
 
-      async notify( data: StupidDealData) {
+      async notify( data: SavingsData) {
           try {
             return new Promise((resolve, reject) => {
               const params = this.createEmailRequest(data);
@@ -22,14 +22,14 @@ export class AmazonNotifier {
                   else 
                       return resolve(data);
                 });
-          })
+            })
           }
           catch(e) {
             throw e;
           }
       }
 
-      createEmailRequest(data: StupidDealData) : SendEmailRequest {
+      createEmailRequest(data: SavingsData) : SendEmailRequest {
         return {
           Source: "jonmorales2.718@gmail.com",
           Destination: {
