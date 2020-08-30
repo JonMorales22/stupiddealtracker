@@ -44,7 +44,7 @@ export class SavingsNotifier {
     }
 
     searchData(data: string) {
-        data.toLowerCase();
+        data = data.toLowerCase();
         for(let i=0;i<this.searchList.length;i++) {
             if(data.includes(this.searchList[i]))
                 return true;

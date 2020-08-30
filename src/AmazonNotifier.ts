@@ -13,6 +13,7 @@ export class AmazonNotifier implements INotifier {
           try {
             return new Promise((resolve, reject) => {
               const params = this.createEmailRequest(data);
+              console.log(data);
               console.log("Attempting to send email....")
               this.ses.sendEmail(params, (err: AWSError, data: SendEmailResponse) => {
                   if (err) {
