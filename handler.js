@@ -5,7 +5,6 @@ const AmazonNotifier = require('./build/AmazonNotifier')
 module.exports.track = async event => {
   const notifier = new SavingsNotifier.SavingsNotifier(event.searchList, new AmazonNotifier.AmazonNotifier());
   try {
-    console.log(`SearchList = ${event.searchList}`);
     var result = await notifier.doWork(event.target);
     return createResponse(200, result, event);
   } 
