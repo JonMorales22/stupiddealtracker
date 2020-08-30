@@ -1,16 +1,19 @@
-import { AmazonNotifier } from './AmazonNotifier';
+import { INotifier } from './INotifier';
 import { IAnalyzer } from './IAnalyzer';
 import { MusiciansFriendAnalyzer } from './MusiciansFriendAnalyzer';
 import { GuitarCenterAnalyzer } from './GuitarCenterAnalyzer';
 import { HttpClient } from './HttpClient'
 import { CheerioParser } from './CheerioParser'
 
-const searchList = ['guitar', 'midi', 'bass', 'controller', 'drum set', 'drums', 'percussion', 'drum']
+// const searchList = ['guitar', 'midi', 'bass', 'controller', 'drum set', 'drums', 'percussion', 'drum']
 
 export class SavingsNotifier {
-    notifier: AmazonNotifier
-    constructor() {
-        this.notifier = new AmazonNotifier();
+    notifier: INotifier
+    searchList: string[]
+    constructor(searchList: string[], notifier: INotifier) {
+        this.searchList = searchList;
+        this.notifier = notifier;
+        console.log(`SearchList = ${searchList}`);
     }
 
     async doWork(target: string) {
@@ -20,6 +23,7 @@ export class SavingsNotifier {
                 const data = await analyzer.getData()
                 console.log(JSON.stringify(data,null, 2));
                 if(this.searchData(data.description)||this.searchData(data.title)) {
+                    this.notifier.notify(data)
                     return resolve("THE BEACON IS LIT!!! GONDOR CALLS FOR AID!");
                 }
 
@@ -43,8 +47,8 @@ export class SavingsNotifier {
 
     searchData(data: string) {
         data.toLowerCase();
-        for(let i=0;i<searchList.length;i++) {
-            if(data.includes(searchList[i]))
+        for(let i=0;i<this.searchList.length;i++) {
+            if(data.includes(this.searchList[i]))
                 return true;
         }
     

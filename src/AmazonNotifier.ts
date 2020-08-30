@@ -1,11 +1,10 @@
 // Load the AWS SDK for Node.js
 import { SES, AWSError } from 'aws-sdk';
+import { INotifier } from './INotifier'
 import { SendEmailRequest, SendEmailResponse } from 'aws-sdk/clients/ses';
-// Set the region 
-// AWS.config.update({region: 'us-east-1'});
 
-export class AmazonNotifier {
-      ses;
+export class AmazonNotifier implements INotifier {
+      ses: SES;
       constructor() {
           this.ses = new SES();
       }
