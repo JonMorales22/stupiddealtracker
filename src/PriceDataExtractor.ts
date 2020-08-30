@@ -1,6 +1,9 @@
 import { PriceDataElements } from "./PriceDataElements";
 import { IParser } from "./IParser"
 
+//looks for a money sign ($) -> followed by N numbers -> followed by a period (.) -> followed by 2 numbers
+// ex: $42.11, $123098.12
+// this WILL break if the website puts commas in a number (ie: $1,000.00)
 const moneyRegex = new RegExp('\\${1}\\d*\.{1}\\d{2}', 'i')
 
 export class PriceDataExtractor {
@@ -19,12 +22,13 @@ export class PriceDataExtractor {
         }
     }
 
+    //takes in a string and performs regex operation to pull out a 'money string'
     getMoneyAsNumber(stuff : string) {
         const money = moneyRegex.exec(stuff);
         return money == null ? null : this.parseMoneyStringToNumber(money[0])
     }
 
-    //input =  "$45.66". method will cut out the dollar sign and parse the rest into number
+    //if input =  $45.66. method will cut out the dollar sign and parse the rest into number
     parseMoneyStringToNumber(stringToParse : string) : number {
         return parseFloat(stringToParse.substring(1));
     }

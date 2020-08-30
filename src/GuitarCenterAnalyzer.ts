@@ -1,12 +1,11 @@
 import { IAnalyzer } from './IAnalyzer';
-import { PriceDataExtractor } from './PriceDataExtractor';
 import { IHttpClient } from './IHttpClient';
 import { IParser } from './IParser';
+import { PriceDataExtractor } from './PriceDataExtractor';
 
-const axios = require('axios');
-const cheerio = require('cheerio');
 const url = 'https://www.guitarcenter.com/Daily-Pick.gc';
 
+//defines the htmlElements on the webpage that store the related data
 const priceDataElements = {
     newPrice: '.dailypick-price',
     savings: '.dailypick-save',

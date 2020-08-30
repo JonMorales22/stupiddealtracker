@@ -8,7 +8,6 @@ export class HttpClient implements IHttpClient {
         return new Promise(async(resolve, reject) => {
             try{
                 const { data } = await axios.get(url);
-                // return resolve(cheerio.load(data));
                 return resolve(data);
             }
             catch(e) {

@@ -1,11 +1,11 @@
 import { IAnalyzer } from './IAnalyzer';
 import { IHttpClient } from './IHttpClient';
-import { PriceDataExtractor } from './PriceDataExtractor';
 import { IParser } from './IParser';
-import { CheerioParser } from './CheerioParser';
+import { PriceDataExtractor } from './PriceDataExtractor';
 
 const url = 'https://www.musiciansfriend.com/stupid'
 
+//defines the htmlElements on the webpage that store the related data
 const priceDataElements = {
     savings: '.feature-save',
     newPrice: '.feature-price',
